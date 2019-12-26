@@ -1,7 +1,7 @@
 import React from "react";
-import "./App.css";
-import { createGlobalStyle } from "styled-components";
 import Navbar from "./components/Navbar/Navbar";
+import Menu from "./components/Menu/Menu";
+import { createGlobalStyle } from "styled-components";
 import { Banner } from "./components/Banner/Banner";
 
 const GlobalStyle = createGlobalStyle`
@@ -20,7 +20,7 @@ function App() {
       <GlobalStyle />
       <Navbar />
       <Banner />
-      <h1>SliceLine</h1>
+      <Menu />
     </React.Fragment>
   );
 }

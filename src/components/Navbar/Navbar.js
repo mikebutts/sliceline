@@ -20,7 +20,10 @@ const Navbar = () => {
   return (
     <NavbarStyled>
       <Logo>
-        SliceLine <span role="img">🍕</span>
+        SliceLine{" "}
+        <span role="img" aria-label="pizza">
+          🍕
+        </span>
       </Logo>
     </NavbarStyled>
   );

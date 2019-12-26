@@ -19,7 +19,9 @@ const Logo = styled(Title)`
 const Navbar = () => {
   return (
     <NavbarStyled>
-      <Logo>SliceLine 🍕</Logo>
+      <Logo>
+        SliceLine <span role="img">🍕</span>
+      </Logo>
     </NavbarStyled>
   );
 };

@@ -83,6 +83,10 @@ export function FoodDialog({ openFood, setOpenFood }) {
       <Dialog>
         <DialogBanner img={openFood.img} />
         <DialogBannerName>{openFood.name} </DialogBannerName>
+        <DialogContent />
+        <DialogFooter>
+          <ConfirmButton>Add to Order</ConfirmButton>
+        </DialogFooter>
       </Dialog>
     </>
   ) : null;

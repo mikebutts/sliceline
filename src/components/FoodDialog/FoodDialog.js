@@ -73,10 +73,20 @@ const DialogBannerName = styled(FoodLabel)`
   top: ${({ img }) => (img ? `100px` : `20px`)};
 `;
 
-export function FoodDialog({ openFood, setOpenFood }) {
+export function FoodDialog({ openFood, setOpenFood, setOrders, orders }) {
+  const order = {
+    ...openFood
+  };
+
   function close() {
     setOpenFood();
   }
+
+  function addToOrder() {
+    setOrders([...orders, order]);
+    close();
+  }
+
   return openFood ? (
     <>
       <DialogShadow onClick={close} />
@@ -85,7 +95,7 @@ export function FoodDialog({ openFood, setOpenFood }) {
         <DialogBannerName>{openFood.name} </DialogBannerName>
         <DialogContent />
         <DialogFooter>
-          <ConfirmButton>Add to Order</ConfirmButton>
+          <ConfirmButton onClick={addToOrder}>Add to Order</ConfirmButton>
         </DialogFooter>
       </Dialog>
     </>

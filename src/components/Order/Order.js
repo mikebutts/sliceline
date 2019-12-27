@@ -52,10 +52,17 @@ const DetailItem = styled.div`
   font-size: 10px;
 `;
 
-export function Order() {
+export function Order({ orders }) {
   return (
     <>
       <OrderStyled>
+        {orders.length === 0 ? (
+          <OrderContent> Your order's looking pretty empty.</OrderContent>
+        ) : (
+          <OrderContent>
+            <OrderContainer>Your order:</OrderContainer>
+          </OrderContent>
+        )}
         <DialogFooter>
           <ConfirmButton>Checkout</ConfirmButton>
         </DialogFooter>

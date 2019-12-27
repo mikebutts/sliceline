@@ -5,7 +5,7 @@ import {
   DialogFooter,
   ConfirmButton
 } from "../FoodDialog/FoodDialog";
-
+import { formatPrice } from "../../Data/FoodData";
 const OrderStyled = styled.div`
   position: fixed;
   right: 0px;
@@ -61,6 +61,15 @@ export function Order({ orders }) {
         ) : (
           <OrderContent>
             <OrderContainer>Your order:</OrderContainer>
+            {orders.map(order => (
+              <OrderContainer>
+                <OrderItem>
+                  <div>1</div>
+                  <div>{order.name}</div>
+                  <div>{formatPrice(order.price)}</div>
+                </OrderItem>
+              </OrderContainer>
+            ))}
           </OrderContent>
         )}
         <DialogFooter>

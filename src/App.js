@@ -7,10 +7,11 @@ import { Banner } from "./components/Banner/Banner";
 import { GlobalStyle } from "./styles/globalStyles";
 import { useOpenFood } from "./Hooks/useOpenFood";
 import { useOrders } from "./Hooks/useOrders";
-
+import { useTitle } from "./Hooks/useTitle";
 function App() {
   const openFood = useOpenFood();
   const orders = useOrders();
+  useTitle({ ...openFood, ...orders });
   return (
     <React.Fragment>
       <GlobalStyle />

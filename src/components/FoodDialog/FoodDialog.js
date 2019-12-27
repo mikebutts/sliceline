@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { FoodLabel } from "../Menu/FoodGrid";
 import { Title } from "../../styles/title";
+import { formatPrice } from "../../Data/FoodData";
 
 import { pizzaRed } from "../../styles/colors";
 const Dialog = styled.div`
@@ -95,7 +96,9 @@ export function FoodDialog({ openFood, setOpenFood, setOrders, orders }) {
         <DialogBannerName>{openFood.name} </DialogBannerName>
         <DialogContent />
         <DialogFooter>
-          <ConfirmButton onClick={addToOrder}>Add to Order</ConfirmButton>
+          <ConfirmButton onClick={addToOrder}>
+            Add to Order: {formatPrice(openFood.price)}
+          </ConfirmButton>
         </DialogFooter>
       </Dialog>
     </>

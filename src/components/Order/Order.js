@@ -54,59 +54,78 @@ const DetailItem = styled.div`
   font-size: 10px;
 `;
 
-export function Order({ orders }) {
+export function Order({ orders, setOrders, setOpenFood }) {
   const subtotal = orders.reduce((total, order) => {
     return total + getPrice(order);
   }, 0);
   const tax = subtotal * 0.08;
   const total = subtotal + tax;
+
+  const deleteItem = index => {
+    const newOrders = [...orders];
+    newOrders.splice(index, 1);
+    setOrders(newOrders);
+  };
+
   return (
-    <>
-      <OrderStyled>
-        {orders.length === 0 ? (
-          <OrderContent> Your order's looking pretty empty.</OrderContent>
-        ) : (
-          <OrderContent>
-            <OrderContainer>Your order:</OrderContainer>
-            {orders.map(order => (
-              <OrderContainer key={order.nam}>
-                <OrderItem>
-                  <div>{order.quantity}</div>
-                  <div>{order.name}</div>
-                  <div>{formatPrice(getPrice(order))}</div>
-                </OrderItem>
-                <DetailItem>
-                  {order.toppings
-                    .filter(t => t.checked)
-                    .map(topping => topping.name)
-                    .join(", ")}
-                </DetailItem>
-                {order.choice && <DetailItem>{order.choice}</DetailItem>}
-              </OrderContainer>
-            ))}
-            <OrderContainer>
-              <OrderItem>
-                <div />
-                <div>SubTotal:</div>
-                <div>{formatPrice(subtotal)}</div>
+    <OrderStyled>
+      {orders.length === 0 ? (
+        <OrderContent>Your order's looking pretty empty.</OrderContent>
+      ) : (
+        <OrderContent>
+          {" "}
+          <OrderContainer> Your Order: </OrderContainer>{" "}
+          {orders.map((order, index) => (
+            <OrderContainer editable>
+              <OrderItem
+                onClick={() => {
+                  setOpenFood({ ...order, index });
+                }}
+              >
+                <div>{order.quantity}</div>
+                <div>{order.name}</div>
+                <div
+                  style={{ cursor: "pointer" }}
+                  onClick={e => {
+                    e.stopPropagation();
+                    deleteItem(index);
+                  }}
+                >
+                  🗑
+                </div>
+                <div>{formatPrice(getPrice(order))}</div>
               </OrderItem>
-              <OrderItem>
-                <div />
-                <div>Tax:</div>
-                <div>{formatPrice(tax)}</div>
-              </OrderItem>
-              <OrderItem>
-                <div />
-                <div>Total:</div>
-                <div>{formatPrice(total)}</div>
-              </OrderItem>
+              <DetailItem>
+                {order.toppings
+                  .filter(t => t.checked)
+                  .map(topping => topping.name)
+                  .join(", ")}
+              </DetailItem>
+              {order.choice && <DetailItem>{order.choice}</DetailItem>}
             </OrderContainer>
-          </OrderContent>
-        )}
-        <DialogFooter>
-          <ConfirmButton>Checkout</ConfirmButton>
-        </DialogFooter>
-      </OrderStyled>
-    </>
+          ))}
+          <OrderContainer>
+            <OrderItem>
+              <div />
+              <div>Sub-Total</div>
+              <div>{formatPrice(subtotal)}</div>
+            </OrderItem>
+            <OrderItem>
+              <div />
+              <div>Tax</div>
+              <div>{formatPrice(tax)}</div>
+            </OrderItem>
+            <OrderItem>
+              <div />
+              <div>Total</div>
+              <div>{formatPrice(total)}</div>
+            </OrderItem>
+          </OrderContainer>
+        </OrderContent>
+      )}
+      <DialogFooter>
+        <ConfirmButton>Checkout</ConfirmButton>
+      </DialogFooter>
+    </OrderStyled>
   );
 }

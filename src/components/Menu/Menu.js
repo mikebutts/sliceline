@@ -18,6 +18,7 @@ const Menu = ({ setOpenFood }) => {
           <FoodGrid>
             {foods.map(food => (
               <Food
+                key={food.name}
                 img={food.img}
                 onClick={() => {
                   setOpenFood(food);

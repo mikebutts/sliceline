@@ -3,9 +3,11 @@ import styled from "styled-components";
 import {
   DialogContent,
   DialogFooter,
-  ConfirmButton
+  ConfirmButton,
+  getPrice
 } from "../FoodDialog/FoodDialog";
 import { formatPrice } from "../../Data/FoodData";
+
 const OrderStyled = styled.div`
   position: fixed;
   right: 0px;
@@ -53,6 +55,11 @@ const DetailItem = styled.div`
 `;
 
 export function Order({ orders }) {
+  const subtotal = orders.reduce((total, order) => {
+    return total + getPrice(order);
+  }, 0);
+  const tax = subtotal * 0.08;
+  const total = subtotal + tax;
   return (
     <>
       <OrderStyled>
@@ -62,14 +69,37 @@ export function Order({ orders }) {
           <OrderContent>
             <OrderContainer>Your order:</OrderContainer>
             {orders.map(order => (
-              <OrderContainer>
+              <OrderContainer key={order.nam}>
                 <OrderItem>
-                  <div>1</div>
+                  <div>{order.quantity}</div>
                   <div>{order.name}</div>
-                  <div>{formatPrice(order.price)}</div>
+                  <div>{formatPrice(getPrice(order))}</div>
                 </OrderItem>
+                <DetailItem>
+                  {order.toppings
+                    .filter(t => t.checked)
+                    .map(topping => topping.name)
+                    .join(", ")}
+                </DetailItem>
               </OrderContainer>
             ))}
+            <OrderContainer>
+              <OrderItem>
+                <div />
+                <div>SubTotal:</div>
+                <div>{formatPrice(subtotal)}</div>
+              </OrderItem>
+              <OrderItem>
+                <div />
+                <div>Tax:</div>
+                <div>{formatPrice(tax)}</div>
+              </OrderItem>
+              <OrderItem>
+                <div />
+                <div>Total:</div>
+                <div>{formatPrice(total)}</div>
+              </OrderItem>
+            </OrderContainer>
           </OrderContent>
         )}
         <DialogFooter>
